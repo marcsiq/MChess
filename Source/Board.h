@@ -25,7 +25,7 @@ public:
     void resized() override;
 
     void printBoard(void);
-    Square getSquare(File f, Rank r);
+    Square* getSquare(File f, Rank r);
 private:
 
 

@@ -42,9 +42,9 @@ void Board::printBoard(void)
     }
 }
 
-Square Board::getSquare(File f, Rank r)
+Square* Board::getSquare(File f, Rank r)
 {
-    return boardSquares.getReference((int)f * BOARD_LENGTH + (int)r);
+    return &boardSquares.getReference((int)f * BOARD_LENGTH + (int)r);
 }
 
 void Board::paint (juce::Graphics& g)
@@ -56,13 +56,12 @@ void Board::resized()
 {
     auto b = getLocalBounds();
     auto squareSize = std::min(b.getHeight(), b.getWidth()) / BOARD_LENGTH;
-    int s = 0;
     for (int i = 0; i < BOARD_LENGTH; i++)
     {
         auto file = b.removeFromBottom(squareSize);
         for (int j = 0; j < BOARD_LENGTH; j++)
         {
-            boardSquares.getReference(s++).setBounds(file.removeFromLeft(squareSize));
+            getSquare((File)i, (Rank)j)->setBounds(file.removeFromLeft(squareSize));
         }
     }
 }
