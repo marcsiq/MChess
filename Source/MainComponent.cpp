@@ -3,7 +3,7 @@
 //==============================================================================
 MainComponent::MainComponent()
 {
-    setSize (600, 600);
+    setSize (800, 800);
     addAndMakeVisible(board);
 }
 

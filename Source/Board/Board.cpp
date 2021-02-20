@@ -19,7 +19,7 @@ Board::Board()
         Colour currentColour = (i & 0x01) ? Colour::WHITE : Colour::BLACK;
         for (int j = 0; j < BOARD_LENGTH; j++)
         {
-            boardSquares.add(Square(currentColour, Location((File)i, (Rank)j), false));
+            boardSquares.add( new Square(currentColour, Location((File)i, (Rank)j), false));
             currentColour = currentColour == Colour::WHITE ? Colour::BLACK : Colour::WHITE;
         }
     }
@@ -38,13 +38,18 @@ void Board::printBoard(void)
 {
     for (auto& s : boardSquares)
     {
-        DBG(s.toString());
+        DBG(s->toString());
     }
+}
+
+void Board::printPiece(PieceBase piece)
+{
+    DBG(piece.toString());
 }
 
 Square* Board::getSquare(File f, Rank r)
 {
-    return &boardSquares.getReference((int)f * BOARD_LENGTH + (int)r);
+    return boardSquares[(int)f * BOARD_LENGTH + (int)r];
 }
 
 void Board::paint (juce::Graphics& g)

@@ -11,8 +11,8 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "Enums.h"
-#include "Location.h"
+#include "../Utils/Enums.h"
+#include "../Utils/Location.h"
 
 class Square : public juce::Component
 {
@@ -20,6 +20,9 @@ public:
     //==============================================================================
     Square(Colour mcolour, Location mLocation, bool occupied);
     Square(const Square& other);
+
+    Square& operator=(const Square& other);
+
     //==============================================================================
 
     bool getOccupied(void);

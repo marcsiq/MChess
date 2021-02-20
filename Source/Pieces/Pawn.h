@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    Board.h
-    Created: 20 Feb 2021 11:48:48am
+    Pawn.h
+    Created: 20 Feb 2021 1:35:12pm
     Author:  marcs
 
   ==============================================================================
@@ -11,24 +11,20 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "Square.h"
+#include "PieceBase.h"
+
 //==============================================================================
 /*
 */
-class Board  : public juce::Component
+class Pawn  : public PieceBase
 {
 public:
-    Board();
-    ~Board() override;
+    Pawn(Colour colour);
+    ~Pawn() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
-    void printBoard(void);
-    Square* getSquare(File f, Rank r);
 private:
-
-
-    juce::Array<Square> boardSquares;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Board)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pawn)
 };

@@ -4,12 +4,33 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
   <MAINGROUP id="IPQUpS" name="MChess">
     <GROUP id="{AF39228F-439B-A719-27FE-EFB1C5D937BE}" name="Source">
-      <FILE id="rSxcEt" name="Board.cpp" compile="1" resource="0" file="Source/Board.cpp"/>
-      <FILE id="Fd9jCJ" name="Board.h" compile="0" resource="0" file="Source/Board.h"/>
-      <FILE id="tLY4f6" name="Location.h" compile="0" resource="0" file="Source/Location.h"/>
-      <FILE id="z8iaZy" name="Enums.h" compile="0" resource="0" file="Source/Enums.h"/>
-      <FILE id="GEY7lt" name="Square.cpp" compile="1" resource="0" file="Source/Square.cpp"/>
-      <FILE id="GWSccQ" name="Square.h" compile="0" resource="0" file="Source/Square.h"/>
+      <GROUP id="{98103CD2-84D3-EAEF-8995-00BAAF6F7608}" name="Board">
+        <FILE id="eivBr9" name="Board.cpp" compile="1" resource="0" file="Source/Board/Board.cpp"/>
+        <FILE id="T7r3DU" name="Board.h" compile="0" resource="0" file="Source/Board/Board.h"/>
+        <FILE id="Jf8Dhs" name="Square.cpp" compile="1" resource="0" file="Source/Board/Square.cpp"/>
+        <FILE id="VPLDx6" name="Square.h" compile="0" resource="0" file="Source/Board/Square.h"/>
+      </GROUP>
+      <GROUP id="{6D7D7489-D6B6-600D-5E2D-A7913633C0B2}" name="Utils">
+        <FILE id="FpiyNN" name="Enums.h" compile="0" resource="0" file="Source/Utils/Enums.h"/>
+        <FILE id="JzjixG" name="Location.h" compile="0" resource="0" file="Source/Utils/Location.h"/>
+      </GROUP>
+      <GROUP id="{00A03E83-E6EB-0317-5C07-71D5778B836B}" name="Pieces">
+        <FILE id="HbKPQI" name="Bishop.cpp" compile="1" resource="0" file="Source/Pieces/Bishop.cpp"/>
+        <FILE id="hh2qoS" name="Bishop.h" compile="0" resource="0" file="Source/Pieces/Bishop.h"/>
+        <FILE id="PiODAh" name="King.cpp" compile="1" resource="0" file="Source/Pieces/King.cpp"/>
+        <FILE id="t5Jae9" name="King.h" compile="0" resource="0" file="Source/Pieces/King.h"/>
+        <FILE id="GSnrTt" name="Knight.cpp" compile="1" resource="0" file="Source/Pieces/Knight.cpp"/>
+        <FILE id="MSZ8PT" name="Knight.h" compile="0" resource="0" file="Source/Pieces/Knight.h"/>
+        <FILE id="A4Bg9G" name="Pawn.cpp" compile="1" resource="0" file="Source/Pieces/Pawn.cpp"/>
+        <FILE id="x8VRRX" name="Pawn.h" compile="0" resource="0" file="Source/Pieces/Pawn.h"/>
+        <FILE id="XQxFPp" name="PieceBase.cpp" compile="1" resource="0" file="Source/Pieces/PieceBase.cpp"/>
+        <FILE id="SyyJ98" name="PieceBase.h" compile="0" resource="0" file="Source/Pieces/PieceBase.h"/>
+        <FILE id="tMQpQn" name="Pieces.h" compile="0" resource="0" file="Source/Pieces/Pieces.h"/>
+        <FILE id="Uq4KrQ" name="Queen.cpp" compile="1" resource="0" file="Source/Pieces/Queen.cpp"/>
+        <FILE id="m3bds2" name="Queen.h" compile="0" resource="0" file="Source/Pieces/Queen.h"/>
+        <FILE id="u3UcGd" name="Rook.cpp" compile="1" resource="0" file="Source/Pieces/Rook.cpp"/>
+        <FILE id="abljXO" name="Rook.h" compile="0" resource="0" file="Source/Pieces/Rook.h"/>
+      </GROUP>
       <FILE id="TTXeMb" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="kzzXU9" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="ooq3op" name="MainComponent.cpp" compile="1" resource="0"

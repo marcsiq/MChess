@@ -22,6 +22,19 @@ Square::Square(const Square& other)
  
 }
 
+Square& Square::operator=(const Square& other)
+{
+    // Guard self assignment
+    if (this == &other)
+        return *this;
+
+    this->location = other.location;
+    this->colour = other.colour;
+    this->isOccupied = other.isOccupied;
+
+    return *this;
+}
+
 void Square::reset()
 {
     isOccupied = false;
@@ -62,8 +75,7 @@ void Square::paint(juce::Graphics& g)
 {
     g.fillAll(getSquareColour(colour).interpolatedWith(juce::Colours::red, isMouseOver() ? 0.5f: 0.0f));
     g.setColour(getSquareColour((colour == Colour::WHITE ? Colour::BLACK : Colour::WHITE)));
-    int offset = 10;
-    g.drawSingleLineText(location.toString(), getLocalBounds().getX(), getLocalBounds().getY() + offset, juce::Justification::left);
+    g.drawSingleLineText(location.toString(), getLocalBounds().getX(), getLocalBounds().getY() + 10, juce::Justification::left);
 }
 
 void Square::resized()
