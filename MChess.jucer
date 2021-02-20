@@ -4,6 +4,12 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
   <MAINGROUP id="IPQUpS" name="MChess">
     <GROUP id="{AF39228F-439B-A719-27FE-EFB1C5D937BE}" name="Source">
+      <FILE id="rSxcEt" name="Board.cpp" compile="1" resource="0" file="Source/Board.cpp"/>
+      <FILE id="Fd9jCJ" name="Board.h" compile="0" resource="0" file="Source/Board.h"/>
+      <FILE id="tLY4f6" name="Location.h" compile="0" resource="0" file="Source/Location.h"/>
+      <FILE id="z8iaZy" name="Enums.h" compile="0" resource="0" file="Source/Enums.h"/>
+      <FILE id="GEY7lt" name="Square.cpp" compile="1" resource="0" file="Source/Square.cpp"/>
+      <FILE id="GWSccQ" name="Square.h" compile="0" resource="0" file="Source/Square.h"/>
       <FILE id="TTXeMb" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="kzzXU9" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="ooq3op" name="MainComponent.cpp" compile="1" resource="0"
@@ -35,4 +41,7 @@
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
+  <LIVE_SETTINGS>
+    <WINDOWS/>
+  </LIVE_SETTINGS>
 </JUCERPROJECT>
