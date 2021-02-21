@@ -42,6 +42,14 @@ public:
         return !(lhs == rhs);
     }
 
+    Location withOffset(int fileOffset, int rankOffset)
+    {
+        int newFile = std::max(0, std::min(BOARD_LENGTH, fileOffset + (int)file));
+        int newRank = std::max(0, std::min(BOARD_LENGTH, rankOffset + (int)rank));
+        Location l((File)newFile, (Rank)newRank);
+        return l;
+    }
+
 private:
     File file;
     Rank rank;

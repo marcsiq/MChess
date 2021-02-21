@@ -12,11 +12,13 @@
 
 #include <JuceHeader.h>
 #include "PieceBase.h"
+#include "../Board/Moves.h"
 
 //==============================================================================
 /*
 */
-class Knight  : public PieceBase
+class Knight  : public PieceBase,
+                public Moves
 {
 public:
     Knight(Colour colour);
@@ -24,6 +26,8 @@ public:
 
     void paint (juce::Graphics&) override;
     void resized() override;
+
+    juce::Array<Location> getValidMoves(Board board) override;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Knight)

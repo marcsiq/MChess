@@ -12,7 +12,8 @@
 
 #include <JuceHeader.h>
 #include "Square.h"
-#include "../Pieces/Pieces.h"
+#include "../Pieces/PieceBase.h"
+
 //==============================================================================
 /*
 */
@@ -21,17 +22,20 @@ class Board  : public juce::Component
 public:
     Board();
     ~Board() override;
+    Board(const Board& other);
+
+    void initBoard();
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
     void printBoard(void);
-    void printPiece(PieceBase piece);
 
     Square* getSquare(File f, Rank r);
+    Square* getSquare(Location l);
 private:
 
-
     juce::OwnedArray<Square> boardSquares;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Board)
+
+    JUCE_LEAK_DETECTOR(Board)
 };

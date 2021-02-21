@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "Board.h"
+#include "../Pieces/Pieces.h"
 
 //==============================================================================
 Board::Board()
@@ -19,7 +20,7 @@ Board::Board()
         Colour currentColour = (i & 0x01) ? Colour::WHITE : Colour::BLACK;
         for (int j = 0; j < BOARD_LENGTH; j++)
         {
-            boardSquares.add( new Square(currentColour, Location((File)i, (Rank)j), false));
+            boardSquares.add( new Square(currentColour, Location((File)i, (Rank)j)));
             currentColour = currentColour == Colour::WHITE ? Colour::BLACK : Colour::WHITE;
         }
     }
@@ -28,6 +29,20 @@ Board::Board()
     {
         addAndMakeVisible(s);
     }
+}
+
+void Board::initBoard()
+{
+    for (auto& s : boardSquares)
+    {
+        s->reset();
+    }
+}
+
+Board::Board(const Board& other)
+    : Board()
+{
+
 }
 
 Board::~Board()
@@ -42,9 +57,9 @@ void Board::printBoard(void)
     }
 }
 
-void Board::printPiece(PieceBase piece)
+Square* Board::getSquare(Location l)
 {
-    DBG(piece.toString());
+    return getSquare(l.getFile(), l.getRank());
 }
 
 Square* Board::getSquare(File f, Rank r)
@@ -66,7 +81,7 @@ void Board::resized()
         auto file = b.removeFromBottom(squareSize);
         for (int j = 0; j < BOARD_LENGTH; j++)
         {
-            getSquare((File)i, (Rank)j)->setBounds(file.removeFromLeft(squareSize));
+            getSquare((File)j, (Rank)i)->setBounds(file.removeFromLeft(squareSize));
         }
     }
 }

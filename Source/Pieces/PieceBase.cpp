@@ -47,17 +47,6 @@ Square PieceBase::getCurrentSquare()
 void PieceBase::setCurrentSquare(Square* square)
 {
     currentSquare.reset(square);
-    DBG(toString());
-}
-
-void PieceBase::paint (juce::Graphics& g)
-{
-
-}
-
-void PieceBase::resized()
-{
-
 }
 
 juce::String PieceBase::toString()
@@ -66,7 +55,12 @@ juce::String PieceBase::toString()
     text << "Piece{";
     text << " Name=" << name;
     text << " Colour=" << colourToString[colour];
-    text << " Square=" << (currentSquare == nullptr ? "null" : currentSquare->toString());
+    text << " Square=" << (currentSquare == nullptr ? "null" : currentSquare->getLocation().toString());
     text << " }";
     return text;
+}
+
+void PieceBase::paint(juce::Graphics& g)
+{
+    g.fillAll(juce::Colours::yellow);
 }

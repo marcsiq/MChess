@@ -15,7 +15,7 @@
 Pawn::Pawn(Colour colour)
     :PieceBase("Pawn", colour)
 {
-
+    isFirstMove = true;
 }
 
 Pawn::~Pawn()
@@ -30,4 +30,11 @@ void Pawn::paint (juce::Graphics& g)
 void Pawn::resized()
 {
 
+}
+
+juce::Array<Location> Pawn::getValidMoves(Board board)
+{
+    auto current = getCurrentSquare().getLocation();
+    juce::Array<Location> moves;
+    return moves;
 }

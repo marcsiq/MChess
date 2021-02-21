@@ -24,14 +24,13 @@ public:
     PieceBase(const PieceBase& other);
     ~PieceBase() override;
 
-    void paint (juce::Graphics&) override;
-    void resized() override;
-
     Colour getPieceColour();
     juce::String getName();
     Square getCurrentSquare();
     void setCurrentSquare(Square* square);
     juce::String PieceBase::toString();
+
+    void paint(juce::Graphics& g) override;
 
 protected:
     Colour colour;

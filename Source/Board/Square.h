@@ -14,21 +14,24 @@
 #include "../Utils/Enums.h"
 #include "../Utils/Location.h"
 
+class PieceBase;
+
 class Square : public juce::Component
 {
 public:
     //==============================================================================
-    Square(Colour mcolour, Location mLocation, bool occupied);
+    Square(Colour mcolour, Location mLocation);
     Square(const Square& other);
+    ~Square();
 
     Square& operator=(const Square& other);
 
     //==============================================================================
 
-    bool getOccupied(void);
-    void setOccupied(bool occupied);
+    bool isOccupied(void);
     Colour getColour(void);
     Location getLocation(void);
+    void setCurrentPiece(PieceBase* piece);
 
     //==============================================================================
 
@@ -42,7 +45,7 @@ public:
 private:
     Colour colour;
     Location location;
-    bool isOccupied;
+    PieceBase* currentPiece;
 
     JUCE_LEAK_DETECTOR(Square)
 };

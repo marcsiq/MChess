@@ -9,17 +9,24 @@
 */
 
 #include "Square.h"
+#include "../Pieces/PieceBase.h"
 
-Square::Square(Colour mcolour, Location mLocation, bool occupied)
-    : colour(mcolour), location(mLocation), isOccupied(occupied)
+Square::Square(Colour mcolour, Location mLocation)
+    : colour(mcolour), location(mLocation)
 {
-    setRepaintsOnMouseActivity(true);
+    //setRepaintsOnMouseActivity(true);
+    currentPiece = nullptr;
 }
 
 Square::Square(const Square& other)
-    : Square(other.colour, other.location, other.isOccupied)
+    : Square(other.colour, other.location)
 {
  
+}
+
+Square::~Square()
+{
+    currentPiece = nullptr;
 }
 
 Square& Square::operator=(const Square& other)
@@ -30,24 +37,19 @@ Square& Square::operator=(const Square& other)
 
     this->location = other.location;
     this->colour = other.colour;
-    this->isOccupied = other.isOccupied;
+    this->currentPiece = other.currentPiece;
 
     return *this;
 }
 
 void Square::reset()
 {
-    isOccupied = false;
+    //currentPiece = nullptr;
 }
 
-bool Square::getOccupied(void)
+bool Square::isOccupied(void)
 {
-    return isOccupied;
-}
-
-void Square::setOccupied(bool occupied)
-{
-    isOccupied = occupied;
+    return currentPiece != nullptr;
 }
 
 Colour Square::getColour(void)
@@ -60,25 +62,36 @@ Location Square::getLocation(void)
     return location;
 }
 
+void Square::setCurrentPiece(PieceBase* piece)
+{
+    currentPiece = piece;
+    currentPiece->setCurrentSquare(this);
+    resized();
+}
+
 juce::String Square::toString()
 {
     juce::String text;
     text << "Square{";
     text << " Colour=" << colourToString[colour];
     text << " Location=" << location.toString();
-    text << " isOccupied=" << juce::String((int)isOccupied);
+    text << " Piece=" << (isOccupied() ? currentPiece->toString() : "NONE");
     text << " }";
     return text;
 }
 
 void Square::paint(juce::Graphics& g)
 {
-    g.fillAll(getSquareColour(colour).interpolatedWith(juce::Colours::red, isMouseOver() ? 0.5f: 0.0f));
+    g.fillAll(getSquareColour(colour));
     g.setColour(getSquareColour((colour == Colour::WHITE ? Colour::BLACK : Colour::WHITE)));
     g.drawSingleLineText(location.toString(), getLocalBounds().getX(), getLocalBounds().getY() + 10, juce::Justification::left);
+
 }
 
 void Square::resized()
 {
-
+    if (isOccupied())
+    {
+        currentPiece->setBounds(getBounds());
+    }
 }

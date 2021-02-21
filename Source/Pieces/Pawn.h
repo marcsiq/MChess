@@ -12,11 +12,13 @@
 
 #include <JuceHeader.h>
 #include "PieceBase.h"
+#include "../Board/Moves.h"
 
 //==============================================================================
 /*
 */
-class Pawn  : public PieceBase
+class Pawn  : public PieceBase,
+            public Moves
 {
 public:
     Pawn(Colour colour);
@@ -25,6 +27,9 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    juce::Array<Location> getValidMoves(Board board) override;
+
 private:
+    bool isFirstMove;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pawn)
 };

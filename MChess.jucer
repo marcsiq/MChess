@@ -7,6 +7,7 @@
       <GROUP id="{98103CD2-84D3-EAEF-8995-00BAAF6F7608}" name="Board">
         <FILE id="eivBr9" name="Board.cpp" compile="1" resource="0" file="Source/Board/Board.cpp"/>
         <FILE id="T7r3DU" name="Board.h" compile="0" resource="0" file="Source/Board/Board.h"/>
+        <FILE id="Yfyjjl" name="Moves.h" compile="0" resource="0" file="Source/Board/Moves.h"/>
         <FILE id="Jf8Dhs" name="Square.cpp" compile="1" resource="0" file="Source/Board/Square.cpp"/>
         <FILE id="VPLDx6" name="Square.h" compile="0" resource="0" file="Source/Board/Square.h"/>
       </GROUP>
