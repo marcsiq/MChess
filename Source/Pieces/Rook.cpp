@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "Rook.h"
+#include "../Board/Board.h"
 
 //==============================================================================
 Rook::Rook(Colour colour)
@@ -29,7 +30,7 @@ Rook::~Rook()
 {
 }
 
-juce::Array<Location> Rook::getValidMoves(Board board)
+juce::Array<Location> Rook::getValidMoves(Board* board)
 {
     juce::Array<Location> moves;
     return moves;

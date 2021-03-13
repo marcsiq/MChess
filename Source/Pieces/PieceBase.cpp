@@ -84,13 +84,14 @@ void PieceBase::mouseDrag(const juce::MouseEvent& event)
     auto board = (Board*) getParentComponent();
     if (board->getCurrentPlayer() == getPieceColour())
     {
-        board->startDragging("PieceBase", this);
+        board->pieceMoving(this);
     }
 }
 
 void PieceBase::mouseUp(const juce::MouseEvent& event)
 {
-    repaint();
+    auto board = (Board*)getParentComponent();
+
 }
 
 bool PieceBase::isInterestedInDragSource(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
@@ -112,4 +113,10 @@ void PieceBase::itemDragExit(const juce::DragAndDropTarget::SourceDetails& dragS
 void PieceBase::itemDropped(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
 {
     currentSquare->itemDropped(dragSourceDetails);
+}
+
+juce::Array<Location> PieceBase::getValidMoves(Board* board)
+{
+    juce::Array<Location> moves;
+    return moves;
 }

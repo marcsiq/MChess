@@ -177,3 +177,51 @@ void Board::nextPlayer()
 {
     currentPlayer = currentPlayer == Colour::WHITE ? Colour::BLACK : Colour::WHITE;
 }
+
+
+void Board::pieceMoving(PieceBase* piece)
+{
+    startDragging("PieceBase", piece);
+    auto moves = piece->getValidMoves(this);
+    for (auto& m : moves)
+    {
+        getSquare(m)->setTarget(true);
+    }
+}
+
+void Board::noPieceMoving(void)
+{
+    for (auto& s : boardSquares)
+    {
+        s->setTarget(false);
+    }
+}
+
+void Board::movePiece(PieceBase* piece, Square* square)
+{
+    piece->getCurrentSquare()->reset();
+    square->setCurrentPiece(piece);
+
+    auto pawn = dynamic_cast<Pawn*>(piece);
+    if (pawn != nullptr)
+    {
+        pawn->makeFirstMove();
+    }
+}
+
+int Board::getNumValidMoves(void)
+{
+    juce::Array<Location> moves;
+
+    for (auto& s : boardSquares)
+    {
+        auto p = s->getCurrentPiece();
+        if (p != nullptr && p->getPieceColour() == currentPlayer)
+        {
+            auto m = p->getValidMoves(this);
+            moves.addArray(m);
+        }
+    }
+
+    return moves.size();
+}

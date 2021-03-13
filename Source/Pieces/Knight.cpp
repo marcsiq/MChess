@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "Knight.h"
+#include "../Board/Board.h"
 
 //==============================================================================
 Knight::Knight(Colour colour)
@@ -29,7 +30,7 @@ Knight::~Knight()
 {
 }
 
-juce::Array<Location> Knight::getValidMoves(Board board)
+juce::Array<Location> Knight::getValidMoves(Board* board)
 {
     juce::Array<Location> moves;
     return moves;

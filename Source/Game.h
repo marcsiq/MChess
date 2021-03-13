@@ -16,6 +16,7 @@ public:
 
     void startGame();
     void nextPlayer();
+    void makeMove(PieceBase* piece, Square* square);
 
 private:
     //==============================================================================

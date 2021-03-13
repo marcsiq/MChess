@@ -14,12 +14,13 @@
 #include "../Utils/Enums.h"
 #include "../Board/Square.h"
 
+class Board; // Forward declaration
+
 //==============================================================================
 /*
 */
 class PieceBase  : public juce::Component,
                    public juce::DragAndDropTarget
-
 {
 public:
     PieceBase(juce::String name, Colour colour);
@@ -30,6 +31,7 @@ public:
     juce::String getName();
     Square* getCurrentSquare();
     void setCurrentSquare(Square* square);
+
     juce::String PieceBase::toString();
 
     void paint(juce::Graphics& g) override;
@@ -45,6 +47,9 @@ public:
     void itemDragMove(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails) override;
     void itemDragExit(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails) override;
     void itemDropped(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails) override;
+
+    virtual juce::Array<Location> getValidMoves(Board* board);
+
 protected:
     Colour colour;
     juce::Image pieceImg;

@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "Queen.h"
+#include "../Board/Board.h"
 
 //==============================================================================
 Queen::Queen(Colour colour)
@@ -29,7 +30,7 @@ Queen::~Queen()
 {
 }
 
-juce::Array<Location> Queen::getValidMoves(Board board)
+juce::Array<Location> Queen::getValidMoves(Board* board)
 {
     juce::Array<Location> moves;
     return moves;

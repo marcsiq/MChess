@@ -12,19 +12,17 @@
 
 #include <JuceHeader.h>
 #include "PieceBase.h"
-#include "../Board/Moves.h"
 
 //==============================================================================
 /*
 */
-class Queen  : public PieceBase,
-               public Moves
+class Queen  : public PieceBase
 {
 public:
     Queen(Colour colour);
     ~Queen() override;
 
-    juce::Array<Location> getValidMoves(Board board) override;
+    juce::Array<Location> getValidMoves(Board* board) override;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Queen)

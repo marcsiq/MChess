@@ -33,11 +33,13 @@ public:
     Colour getColour(void);
     Location getLocation(void);
     void setCurrentPiece(PieceBase* piece);
+    PieceBase* getCurrentPiece(void);
 
     //==============================================================================
 
     void reset();
     juce::String toString();
+    void setTarget(bool isTarget);
 
     //==============================================================================
     void paint(juce::Graphics& g) override;
@@ -53,7 +55,7 @@ private:
     Colour colour;
     Location location;
     PieceBase* currentPiece;
-    bool somethingIsBeingDraggedOver;
+    bool isTarget;
 
     JUCE_LEAK_DETECTOR(Square)
 };

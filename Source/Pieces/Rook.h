@@ -12,19 +12,17 @@
 
 #include <JuceHeader.h>
 #include "PieceBase.h"
-#include "../Board/Moves.h"
 
 //==============================================================================
 /*
 */
-class Rook  : public PieceBase,
-              public Moves
+class Rook  : public PieceBase
 {
 public:
     Rook(Colour colour);
     ~Rook() override;
 
-    juce::Array<Location> getValidMoves(Board board) override;
+    juce::Array<Location> getValidMoves(Board* board) override;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Rook)

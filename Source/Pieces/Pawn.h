@@ -12,19 +12,18 @@
 
 #include <JuceHeader.h>
 #include "PieceBase.h"
-#include "../Board/Moves.h"
 
 //==============================================================================
 /*
 */
-class Pawn  : public PieceBase,
-            public Moves
+class Pawn  : public PieceBase
 {
 public:
     Pawn(Colour colour);
     ~Pawn() override;
 
-    juce::Array<Location> getValidMoves(Board board) override;
+    juce::Array<Location> getValidMoves(Board* board) override;
+    void makeFirstMove();
 
 private:
     bool isFirstMove;

@@ -38,6 +38,14 @@ public:
 
     Square* getSquare(File f, Rank r);
     Square* getSquare(Location l);
+
+    void pieceMoving(PieceBase* piece);
+    void movePiece(PieceBase* piece, Square* square);
+
+    void noPieceMoving(void);
+
+    int getNumValidMoves(void);
+
 private:
 
     juce::OwnedArray<Square> boardSquares;

@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "Bishop.h"
+#include "../Board/Board.h"
 
 //==============================================================================
 Bishop::Bishop(Colour colour)
@@ -29,7 +30,7 @@ Bishop::~Bishop()
 {
 }
 
-juce::Array<Location> Bishop::getValidMoves(Board board)
+juce::Array<Location> Bishop::getValidMoves(Board* board)
 {
     juce::Array<Location> moves;
     return moves;

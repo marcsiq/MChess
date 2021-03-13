@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "Pawn.h"
+#include "../Board/Board.h"
 
 //==============================================================================
 Pawn::Pawn(Colour colour)
@@ -31,9 +32,49 @@ Pawn::~Pawn()
 {
 }
 
-juce::Array<Location> Pawn::getValidMoves(Board board)
+void Pawn::makeFirstMove()
+{
+    isFirstMove = false;
+}
+
+
+juce::Array<Location> Pawn::getValidMoves(Board* board)
 {
     auto current = getCurrentSquare()->getLocation();
+
     juce::Array<Location> moves;
+
+    auto rank1Offset = getPieceColour() == Colour::WHITE ? 1 : -1;
+    auto targetLocation = current.withOffset(0, rank1Offset);
+    if (!board->getSquare(targetLocation)->isOccupied())
+    {
+        moves.addIfNotAlreadyThere(targetLocation);
+    }
+    
+    if (isFirstMove)
+    {
+
+        auto rank2Offset = getPieceColour() == Colour::WHITE ? 2 : -2;
+        targetLocation = current.withOffset(0, rank2Offset);
+        if (!board->getSquare(targetLocation)->isOccupied())
+        {
+            moves.addIfNotAlreadyThere(current.withOffset(0, rank2Offset));
+        }
+    }
+
+    targetLocation = current.withOffset(1, rank1Offset);
+    auto targetSquare = board->getSquare(targetLocation);
+    if (targetSquare->isOccupied() && targetSquare->getCurrentPiece()->getPieceColour() != getPieceColour())
+    {
+        moves.addIfNotAlreadyThere(targetLocation);
+    }
+
+    targetLocation = current.withOffset(-1, rank1Offset);
+    targetSquare = board->getSquare(targetLocation);
+    if (targetSquare->isOccupied() && targetSquare->getCurrentPiece()->getPieceColour() != getPieceColour())
+    {
+        moves.addIfNotAlreadyThere(targetLocation);
+    }
+
     return moves;
 }

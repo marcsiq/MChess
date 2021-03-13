@@ -16,7 +16,7 @@ Square::Square(Colour mcolour, Location mLocation)
     : colour(mcolour), location(mLocation)
 {
     //setRepaintsOnMouseActivity(true);
-    somethingIsBeingDraggedOver = false;
+    isTarget = false;
     currentPiece = nullptr;
 }
 
@@ -79,6 +79,11 @@ void Square::setCurrentPiece(PieceBase* piece)
     resized();
 }
 
+PieceBase* Square::getCurrentPiece(void)
+{
+    return currentPiece;
+}
+
 juce::String Square::toString()
 {
     juce::String text;
@@ -98,7 +103,7 @@ void Square::paint(juce::Graphics& g)
     g.setColour(juce::Colours::white.darker());
     g.drawSingleLineText(location.toString(), b.getX(), b.getY() + 10, juce::Justification::left);
 
-    if (somethingIsBeingDraggedOver)
+    if (isTarget)
     {
         if (isOccupied())
         {
@@ -127,8 +132,7 @@ bool Square::isInterestedInDragSource(const juce::DragAndDropTarget::SourceDetai
 
 void Square::itemDragEnter(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
 {
-    somethingIsBeingDraggedOver = true;
-    repaint();
+
 }
 
 void Square::itemDragMove(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
@@ -138,15 +142,26 @@ void Square::itemDragMove(const juce::DragAndDropTarget::SourceDetails& dragSour
 
 void Square::itemDragExit(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
 {
-    somethingIsBeingDraggedOver = false;
-    repaint();
+
 }
 
 void Square::itemDropped(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
 {
-    somethingIsBeingDraggedOver = false;
-    auto piece = ((PieceBase*)dragSourceDetails.sourceComponent.get());
-    piece->getCurrentSquare()->reset();
-    setCurrentPiece(piece);
-    getGame()->nextPlayer();
+    if (isTarget)
+    {
+        auto piece = ((PieceBase*)dragSourceDetails.sourceComponent.get());
+        getGame()->makeMove(piece, this);
+        isTarget = false;
+    }
+    auto board = (Board*)getParentComponent();
+    board->noPieceMoving();
+}
+
+void Square::setTarget(bool isTarget)
+{
+    if (this->isTarget != isTarget)
+    {
+        this->isTarget = isTarget;
+        repaint();
+    }
 }

@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "King.h"
+#include "../Board/Board.h"
 
 //==============================================================================
 King::King(Colour colour)
@@ -29,10 +30,25 @@ King::~King()
 {
 }
 
-juce::Array<Location> King::getValidMoves(Board board)
+juce::Array<Location> King::getValidMoves(Board* board)
 {
     juce::Array<Location> moves;
     auto current = currentSquare->getLocation();
-    moves.add(currentSquare->getLocation());
+    
+    for (int i = -1; i <= 1; i++)
+    {
+        for (int j = -1 ; j <= (current.getRank() == Rank::_8 ? 0 : 1); j++)
+        {
+            auto targetLocation = current.withOffset(i, j);
+            if (!board->getSquare(targetLocation)->isOccupied())
+            {
+                moves.addIfNotAlreadyThere(targetLocation);
+            }
+            else if (board->getSquare(targetLocation)->getCurrentPiece()->getPieceColour() != getPieceColour())
+            {
+                moves.addIfNotAlreadyThere(targetLocation);
+            }
+        }
+    }
     return moves;
 }

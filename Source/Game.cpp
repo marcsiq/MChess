@@ -21,9 +21,16 @@ Game::~Game()
 void Game::startGame()
 {
     board->startGame();
+    DBG(board->getNumValidMoves());
 }
 
 void Game::nextPlayer()
 {
     board->nextPlayer();
+}
+
+void Game::makeMove(PieceBase* piece, Square* square)
+{
+    board->movePiece(piece, square);
+    nextPlayer();
 }
