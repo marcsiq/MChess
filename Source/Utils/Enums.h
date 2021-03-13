@@ -29,9 +29,9 @@ static juce::Colour getSquareColour(Colour colour)
     switch (colour)
     {
     case Colour::WHITE:
-        return juce::Colours::white;
+        return juce::Colours::white.interpolatedWith(juce::Colours::lawngreen, 0.1f);
     case Colour::BLACK:
-        return juce::Colours::black;
+        return juce::Colours::black.interpolatedWith(juce::Colours::lawngreen, 0.6f);
     }
 }
 

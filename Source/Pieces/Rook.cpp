@@ -15,27 +15,18 @@
 Rook::Rook(Colour colour)
     :PieceBase("Rook", colour)
 {
-
+    if (colour == Colour::BLACK)
+    {
+        pieceImg = juce::ImageCache::getFromMemory(BinaryData::br_png, BinaryData::br_pngSize);
+    }
+    else if (colour == Colour::WHITE)
+    {
+        pieceImg = juce::ImageCache::getFromMemory(BinaryData::wr_png, BinaryData::wr_pngSize);
+    }
 }
 
 Rook::~Rook()
 {
-}
-
-void Rook::paint (juce::Graphics& g)
-{
-    auto b = getLocalBounds();
-    b.reduce(20, 10);
-    g.setColour(getSquareColour(getPieceColour()));
-    g.fillRoundedRectangle(b.toFloat(), 10.0f);
-    g.setColour(juce::Colours::blue);
-    g.drawRoundedRectangle(b.toFloat(), 10.0f, 3.0f);
-    g.drawSingleLineText("R", b.getCentreX() - 5, b.getCentreY());
-}
-
-void Rook::resized()
-{
-    repaint();
 }
 
 juce::Array<Location> Rook::getValidMoves(Board board)

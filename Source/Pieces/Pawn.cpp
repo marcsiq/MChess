@@ -16,25 +16,24 @@ Pawn::Pawn(Colour colour)
     :PieceBase("Pawn", colour)
 {
     isFirstMove = true;
+
+    if (colour == Colour::BLACK)
+    {
+        pieceImg = juce::ImageCache::getFromMemory(BinaryData::bp_png, BinaryData::bp_pngSize);
+    }
+    else if (colour == Colour::WHITE)
+    {
+        pieceImg = juce::ImageCache::getFromMemory(BinaryData::wp_png, BinaryData::wp_pngSize);
+    }
 }
 
 Pawn::~Pawn()
 {
 }
 
-void Pawn::paint (juce::Graphics& g)
-{
-
-}
-
-void Pawn::resized()
-{
-
-}
-
 juce::Array<Location> Pawn::getValidMoves(Board board)
 {
-    auto current = getCurrentSquare().getLocation();
+    auto current = getCurrentSquare()->getLocation();
     juce::Array<Location> moves;
     return moves;
 }

@@ -16,7 +16,8 @@
 
 class PieceBase;
 
-class Square : public juce::Component
+class Square : public juce::Component,
+    public juce::DragAndDropTarget
 {
 public:
     //==============================================================================
@@ -41,11 +42,18 @@ public:
     //==============================================================================
     void paint(juce::Graphics& g) override;
     void resized() override;
+    //==============================================================================
+    bool isInterestedInDragSource(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails) override;
+    void itemDragEnter(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails) override;
+    void itemDragMove(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails) override;
+    void itemDragExit(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails) override;
+    void itemDropped(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails) override;
 
 private:
     Colour colour;
     Location location;
     PieceBase* currentPiece;
+    bool somethingIsBeingDraggedOver;
 
     JUCE_LEAK_DETECTOR(Square)
 };

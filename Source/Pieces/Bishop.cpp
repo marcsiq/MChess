@@ -15,27 +15,18 @@
 Bishop::Bishop(Colour colour)
     :PieceBase("Bishop", colour)
 {
-
+    if (colour == Colour::BLACK)
+    {
+        pieceImg = juce::ImageCache::getFromMemory(BinaryData::bb_png, BinaryData::bb_pngSize);
+    }
+    else if (colour == Colour::WHITE)
+    {
+        pieceImg = juce::ImageCache::getFromMemory(BinaryData::wb_png, BinaryData::wb_pngSize);
+    }
 }
 
 Bishop::~Bishop()
 {
-}
-
-void Bishop::paint (juce::Graphics& g)
-{
-    auto b = getLocalBounds();
-    b.reduce(20, 10);
-    g.setColour(getSquareColour(getPieceColour()));
-    g.fillRoundedRectangle(b.toFloat(), 10.0f);
-    g.setColour(juce::Colours::blue);
-    g.drawRoundedRectangle(b.toFloat(), 10.0f, 3.0f);
-    g.drawSingleLineText("B", b.getCentreX() - 5, b.getCentreY());
-}
-
-void Bishop::resized()
-{
-    repaint();
 }
 
 juce::Array<Location> Bishop::getValidMoves(Board board)

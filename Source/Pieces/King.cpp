@@ -15,27 +15,18 @@
 King::King(Colour colour)
     :PieceBase("King", colour)
 {
-
+    if (colour == Colour::BLACK)
+    {
+        pieceImg = juce::ImageCache::getFromMemory(BinaryData::bk_png, BinaryData::bk_pngSize);
+    }
+    else if (colour == Colour::WHITE)
+    {
+        pieceImg = juce::ImageCache::getFromMemory(BinaryData::wk_png, BinaryData::wk_pngSize);
+    }
 }
 
 King::~King()
 {
-}
-
-void King::paint (juce::Graphics& g)
-{
-    auto b = getLocalBounds();
-    b.reduce(20, 10);
-    g.setColour(getSquareColour(getPieceColour()));
-    g.fillRoundedRectangle(b.toFloat(), 10.0f);
-    g.setColour(juce::Colours::blue);
-    g.drawRoundedRectangle(b.toFloat(), 10.0f, 3.0f);
-    g.drawSingleLineText("K", b.getCentreX() - 5, b.getCentreY());
-}
-
-void King::resized()
-{
-    repaint();
 }
 
 juce::Array<Location> King::getValidMoves(Board board)

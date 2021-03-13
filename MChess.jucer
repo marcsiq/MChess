@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="Dayzh3" name="MChess" projectType="guiapp" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" displaySplashScreen="1">
   <MAINGROUP id="IPQUpS" name="MChess">
+    <GROUP id="{71631CA3-F082-0B6A-C975-FF100E57110B}" name="Resources">
+      <FILE id="yZuwFO" name="bb.png" compile="0" resource="1" file="Resources/bb.png"/>
+      <FILE id="rRFeZr" name="bk.png" compile="0" resource="1" file="Resources/bk.png"/>
+      <FILE id="XiHHgy" name="bn.png" compile="0" resource="1" file="Resources/bn.png"/>
+      <FILE id="CO1u8a" name="bp.png" compile="0" resource="1" file="Resources/bp.png"/>
+      <FILE id="pAdk5u" name="bq.png" compile="0" resource="1" file="Resources/bq.png"/>
+      <FILE id="b1VlPW" name="br.png" compile="0" resource="1" file="Resources/br.png"/>
+      <FILE id="E8KVRM" name="wb.png" compile="0" resource="1" file="Resources/wb.png"/>
+      <FILE id="ufK1N2" name="wk.png" compile="0" resource="1" file="Resources/wk.png"/>
+      <FILE id="BOJSAS" name="wn.png" compile="0" resource="1" file="Resources/wn.png"/>
+      <FILE id="GngYhI" name="wp.png" compile="0" resource="1" file="Resources/wp.png"/>
+      <FILE id="yENa6H" name="wq.png" compile="0" resource="1" file="Resources/wq.png"/>
+      <FILE id="t0GTwM" name="wr.png" compile="0" resource="1" file="Resources/wr.png"/>
+    </GROUP>
     <GROUP id="{AF39228F-439B-A719-27FE-EFB1C5D937BE}" name="Source">
+      <FILE id="G9PKMT" name="Application.cpp" compile="1" resource="0" file="Source/Application.cpp"/>
+      <FILE id="IJh3Y0" name="Application.h" compile="0" resource="0" file="Source/Application.h"/>
       <GROUP id="{98103CD2-84D3-EAEF-8995-00BAAF6F7608}" name="Board">
         <FILE id="eivBr9" name="Board.cpp" compile="1" resource="0" file="Source/Board/Board.cpp"/>
         <FILE id="T7r3DU" name="Board.h" compile="0" resource="0" file="Source/Board/Board.h"/>
@@ -33,9 +49,8 @@
         <FILE id="abljXO" name="Rook.h" compile="0" resource="0" file="Source/Pieces/Rook.h"/>
       </GROUP>
       <FILE id="TTXeMb" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
-      <FILE id="kzzXU9" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
-      <FILE id="ooq3op" name="MainComponent.cpp" compile="1" resource="0"
-            file="Source/MainComponent.cpp"/>
+      <FILE id="kzzXU9" name="Game.h" compile="0" resource="0" file="Source/Game.h"/>
+      <FILE id="ooq3op" name="Game.cpp" compile="1" resource="0" file="Source/Game.cpp"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1"/>

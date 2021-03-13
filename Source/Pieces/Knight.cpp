@@ -15,27 +15,18 @@
 Knight::Knight(Colour colour)
     :PieceBase("Knight", colour)
 {
-
+    if (colour == Colour::BLACK)
+    {
+        pieceImg = juce::ImageCache::getFromMemory(BinaryData::bn_png, BinaryData::bn_pngSize);
+    }
+    else if (colour == Colour::WHITE)
+    {
+        pieceImg = juce::ImageCache::getFromMemory(BinaryData::wn_png, BinaryData::wn_pngSize);
+    }
 }
 
 Knight::~Knight()
 {
-}
-
-void Knight::paint (juce::Graphics& g)
-{
-    auto b = getLocalBounds();
-    b.reduce(20, 10);
-    g.setColour(getSquareColour(getPieceColour()));
-    g.fillRoundedRectangle(b.toFloat(), 10.0f);
-    g.setColour(juce::Colours::blue);
-    g.drawRoundedRectangle(b.toFloat(), 10.0f, 3.0f);
-    g.drawSingleLineText("KN", b.getCentreX() - 5, b.getCentreY());
-}
-
-void Knight::resized()
-{
-    repaint();
 }
 
 juce::Array<Location> Knight::getValidMoves(Board board)

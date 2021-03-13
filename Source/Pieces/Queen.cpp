@@ -15,27 +15,18 @@
 Queen::Queen(Colour colour)
     :PieceBase("Queen", colour)
 {
-
+    if (colour == Colour::BLACK)
+    {
+        pieceImg = juce::ImageCache::getFromMemory(BinaryData::bq_png, BinaryData::bq_pngSize);
+    }
+    else if (colour == Colour::WHITE)
+    {
+        pieceImg = juce::ImageCache::getFromMemory(BinaryData::wq_png, BinaryData::wq_pngSize);
+    }
 }
 
 Queen::~Queen()
 {
-}
-
-void Queen::paint (juce::Graphics& g)
-{
-    auto b = getLocalBounds();
-    b.reduce(20, 10);
-    g.setColour(getSquareColour(getPieceColour()));
-    g.fillRoundedRectangle(b.toFloat(), 10.0f);
-    g.setColour(juce::Colours::blue);
-    g.drawRoundedRectangle(b.toFloat(), 10.0f, 3.0f);
-    g.drawSingleLineText("Q", b.getCentreX() - 5, b.getCentreY());
-}
-
-void Queen::resized()
-{
-    repaint();
 }
 
 juce::Array<Location> Queen::getValidMoves(Board board)

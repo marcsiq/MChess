@@ -17,7 +17,8 @@
 //==============================================================================
 /*
 */
-class Board  : public juce::Component
+class Board  : public juce::Component,
+    public juce::DragAndDropContainer
 {
 public:
     Board();
@@ -25,17 +26,33 @@ public:
     Board(const Board& other);
 
     void initBoard();
+    void startGame();
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
     void printBoard(void);
 
+    Colour getCurrentPlayer();
+    void nextPlayer();
+
     Square* getSquare(File f, Rank r);
     Square* getSquare(Location l);
 private:
 
     juce::OwnedArray<Square> boardSquares;
+
+    struct
+    {
+        std::unique_ptr<PieceBase> queen[2];
+        std::unique_ptr<PieceBase> king[2];
+        std::unique_ptr<PieceBase> pawn[2][8];
+        std::unique_ptr<PieceBase> rook[2][2];
+        std::unique_ptr<PieceBase> bishop[2][2];
+        std::unique_ptr<PieceBase> knight[2][2];
+    }pieces;
+
+    Colour currentPlayer;
 
     JUCE_LEAK_DETECTOR(Board)
 };

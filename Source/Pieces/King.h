@@ -24,9 +24,6 @@ public:
     King(Colour colour);
     ~King() override;
 
-    void paint (juce::Graphics&) override;
-    void resized() override;
-
     juce::Array<Location> getValidMoves(Board board) override;
 
 private:

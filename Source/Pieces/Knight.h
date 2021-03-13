@@ -24,9 +24,6 @@ public:
     Knight(Colour colour);
     ~Knight() override;
 
-    void paint (juce::Graphics&) override;
-    void resized() override;
-
     juce::Array<Location> getValidMoves(Board board) override;
 
 private:

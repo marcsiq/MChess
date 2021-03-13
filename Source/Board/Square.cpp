@@ -10,11 +10,13 @@
 
 #include "Square.h"
 #include "../Pieces/PieceBase.h"
+#include "../Game.h"
 
 Square::Square(Colour mcolour, Location mLocation)
     : colour(mcolour), location(mLocation)
 {
     //setRepaintsOnMouseActivity(true);
+    somethingIsBeingDraggedOver = false;
     currentPiece = nullptr;
 }
 
@@ -44,7 +46,8 @@ Square& Square::operator=(const Square& other)
 
 void Square::reset()
 {
-    //currentPiece = nullptr;
+    currentPiece = nullptr;
+    repaint();
 }
 
 bool Square::isOccupied(void)
@@ -64,8 +67,15 @@ Location Square::getLocation(void)
 
 void Square::setCurrentPiece(PieceBase* piece)
 {
+    if (isOccupied())
+    {
+        currentPiece->setVisible(false);
+        currentPiece = nullptr;
+    }
     currentPiece = piece;
+    currentPiece->setVisible(true);
     currentPiece->setCurrentSquare(this);
+    currentPiece->toFront(false);
     resized();
 }
 
@@ -82,9 +92,23 @@ juce::String Square::toString()
 
 void Square::paint(juce::Graphics& g)
 {
+    auto b = getLocalBounds().toFloat();
+
     g.fillAll(getSquareColour(colour));
-    g.setColour(getSquareColour((colour == Colour::WHITE ? Colour::BLACK : Colour::WHITE)));
-    g.drawSingleLineText(location.toString(), getLocalBounds().getX(), getLocalBounds().getY() + 10, juce::Justification::left);
+    g.setColour(juce::Colours::white.darker());
+    g.drawSingleLineText(location.toString(), b.getX(), b.getY() + 10, juce::Justification::left);
+
+    if (somethingIsBeingDraggedOver)
+    {
+        if (isOccupied())
+        {
+            g.drawEllipse(b.reduced(10), 10.0f);
+        }
+        else
+        {
+            g.fillEllipse(b.reduced(30));
+        }
+    }
 
 }
 
@@ -94,4 +118,35 @@ void Square::resized()
     {
         currentPiece->setBounds(getBounds());
     }
+}
+
+bool Square::isInterestedInDragSource(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
+{
+    return true;
+}
+
+void Square::itemDragEnter(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
+{
+    somethingIsBeingDraggedOver = true;
+    repaint();
+}
+
+void Square::itemDragMove(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
+{
+
+}
+
+void Square::itemDragExit(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
+{
+    somethingIsBeingDraggedOver = false;
+    repaint();
+}
+
+void Square::itemDropped(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
+{
+    somethingIsBeingDraggedOver = false;
+    auto piece = ((PieceBase*)dragSourceDetails.sourceComponent.get());
+    piece->getCurrentSquare()->reset();
+    setCurrentPiece(piece);
+    getGame()->nextPlayer();
 }

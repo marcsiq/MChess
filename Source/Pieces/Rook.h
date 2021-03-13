@@ -24,9 +24,6 @@ public:
     Rook(Colour colour);
     ~Rook() override;
 
-    void paint (juce::Graphics& g) override;
-    void resized() override;
-
     juce::Array<Location> getValidMoves(Board board) override;
 
 private:
