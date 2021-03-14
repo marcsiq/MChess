@@ -39,8 +39,8 @@ Queen::~Queen()
 juce::Array<Location> Queen::getValidMoves(Board* board)
 {
     juce::Array<Location> moves;
-    rook->setCurrentSquare(currentSquare);
-    bishop->setCurrentSquare(currentSquare);
+    rook->setStartingSquare(currentSquare);
+    bishop->setStartingSquare(currentSquare);
 
     moves.addArray(rook->getValidMoves(board));
     moves.addArray(bishop->getValidMoves(board));

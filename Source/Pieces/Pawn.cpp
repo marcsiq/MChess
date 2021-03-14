@@ -16,7 +16,6 @@
 Pawn::Pawn(Colour colour)
     :PieceBase("Pawn", colour)
 {
-    isFirstMove = true;
 
     if (colour == Colour::BLACK)
     {
@@ -31,12 +30,6 @@ Pawn::Pawn(Colour colour)
 Pawn::~Pawn()
 {
 }
-
-void Pawn::makeFirstMove()
-{
-    isFirstMove = false;
-}
-
 
 juce::Array<Location> Pawn::getValidMoves(Board* board)
 {
@@ -53,7 +46,7 @@ juce::Array<Location> Pawn::getValidMoves(Board* board)
             moves.addIfNotAlreadyThere(targetLocation);
         }
 
-        if (isFirstMove)
+        if (!hasMovedBefore())
         {
 
             auto rank2Offset = getPieceColour() == Colour::WHITE ? 2 : -2;

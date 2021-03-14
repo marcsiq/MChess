@@ -23,7 +23,6 @@ Square::Square(Colour mcolour, Location mLocation)
 Square::Square(const Square& other)
     : Square(other.colour, other.location)
 {
- 
 }
 
 Square::~Square()
@@ -74,7 +73,6 @@ void Square::setCurrentPiece(PieceBase* piece)
     }
     currentPiece = piece;
     currentPiece->setVisible(true);
-    currentPiece->setCurrentSquare(this);
     currentPiece->toFront(false);
     resized();
 }

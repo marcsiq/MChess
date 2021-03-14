@@ -19,6 +19,7 @@ PieceBase::PieceBase(juce::String name, Colour colour)
 {
     currentSquare = nullptr;
     isDragging = false;
+    movedBefore = false;
 }
 
 PieceBase::PieceBase(const PieceBase& other)
@@ -48,9 +49,22 @@ Square* PieceBase::getCurrentSquare()
     return currentSquare;
 }
 
-void PieceBase::setCurrentSquare(Square* square)
+void PieceBase::setStartingSquare(Square* square)
 {
     currentSquare = square;
+    movedBefore = false;
+}
+
+void PieceBase::moveToSquare(Square* square)
+{
+    currentSquare = square;
+    currentSquare->setCurrentPiece(this);
+    movedBefore = true;
+}
+
+bool PieceBase::hasMovedBefore()
+{
+    return movedBefore;
 }
 
 juce::String PieceBase::toString()

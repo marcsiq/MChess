@@ -78,6 +78,7 @@ void Board::addPieceToBoard(PieceBase* piece, Location l)
 {
     addAndMakeVisible(piece);
     getSquare(l)->setCurrentPiece(piece);
+    piece->setStartingSquare(getSquare(l));
 }
 
 void Board::resized()
@@ -115,13 +116,8 @@ void Board::noPieceMoving(void)
 void Board::movePiece(PieceBase* piece, Square* square)
 {
     piece->getCurrentSquare()->reset();
-    square->setCurrentPiece(piece);
+    piece->moveToSquare(square);
 
-    auto pawn = dynamic_cast<Pawn*>(piece);
-    if (pawn != nullptr)
-    {
-        pawn->makeFirstMove();
-    }
 }
 
 int Board::getNumValidMoves(Colour player)

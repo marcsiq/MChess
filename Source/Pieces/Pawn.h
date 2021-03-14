@@ -23,9 +23,7 @@ public:
     ~Pawn() override;
 
     juce::Array<Location> getValidMoves(Board* board) override;
-    void makeFirstMove();
 
 private:
-    bool isFirstMove;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pawn)
 };
