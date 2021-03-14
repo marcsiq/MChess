@@ -17,6 +17,7 @@ PieceBase::PieceBase(juce::String name, Colour colour)
     :colour(colour), name(name)
 {
     currentSquare = nullptr;
+    isDragging = false;
 }
 
 PieceBase::PieceBase(const PieceBase& other)
@@ -64,9 +65,11 @@ juce::String PieceBase::toString()
 
 void PieceBase::paint(juce::Graphics& g)
 {
-    g.setColour(juce::Colours::blue);
-    //g.setImageResamplingQuality(juce::Graphics::highResamplingQuality);
-    g.drawImage(pieceImg, getLocalBounds().toFloat(), juce::RectanglePlacement(juce::RectanglePlacement::fillDestination));
+    if (!isDragging)
+    {
+        g.setImageResamplingQuality(juce::Graphics::highResamplingQuality);
+        g.drawImage(pieceImg, getLocalBounds().toFloat(), juce::RectanglePlacement(juce::RectanglePlacement::fillDestination));
+    }
 }
 
 void PieceBase::resized()
@@ -81,17 +84,19 @@ juce::MouseCursor PieceBase::getMouseCursor()
 
 void PieceBase::mouseDrag(const juce::MouseEvent& event)
 {
+
     auto board = (Board*) getParentComponent();
     if (board->getCurrentPlayer() == getPieceColour())
     {
         board->pieceMoving(this);
     }
+    isDragging = true;
 }
 
 void PieceBase::mouseUp(const juce::MouseEvent& event)
 {
-    auto board = (Board*)getParentComponent();
-
+    isDragging = false;
+    repaint();
 }
 
 bool PieceBase::isInterestedInDragSource(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)

@@ -23,13 +23,9 @@ Board::Board()
         for (int j = 0; j < BOARD_LENGTH; j++)
         {
             boardSquares.add( new Square(currentColour, Location((File)i, (Rank)j)));
+            addAndMakeVisible(boardSquares.getLast());
             currentColour = currentColour == Colour::WHITE ? Colour::BLACK : Colour::WHITE;
         }
-    }
-
-    for (auto& s : boardSquares)
-    {
-        addAndMakeVisible(s);
     }
 
     // INIT PIECES

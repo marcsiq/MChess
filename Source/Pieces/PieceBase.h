@@ -56,5 +56,7 @@ protected:
     Square* currentSquare;
     juce::String name;
 
+    bool isDragging;
+
     JUCE_LEAK_DETECTOR(PieceBase)
 };
