@@ -25,5 +25,8 @@ public:
     juce::Array<Location> getValidMoves(Board* board) override;
 
 private:
+    std::unique_ptr<Rook> rook;
+    std::unique_ptr<Bishop> bishop;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Queen)
 };

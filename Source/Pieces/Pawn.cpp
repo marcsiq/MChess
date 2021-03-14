@@ -44,37 +44,45 @@ juce::Array<Location> Pawn::getValidMoves(Board* board)
 
     juce::Array<Location> moves;
 
-    auto rank1Offset = getPieceColour() == Colour::WHITE ? 1 : -1;
-    auto targetLocation = current.withOffset(0, rank1Offset);
-    if (!board->getSquare(targetLocation)->isOccupied())
+    if (isVisible())
     {
-        moves.addIfNotAlreadyThere(targetLocation);
-    }
-    
-    if (isFirstMove)
-    {
-
-        auto rank2Offset = getPieceColour() == Colour::WHITE ? 2 : -2;
-        targetLocation = current.withOffset(0, rank2Offset);
-        if (!board->getSquare(targetLocation)->isOccupied())
+        auto rank1Offset = getPieceColour() == Colour::WHITE ? 1 : -1;
+        auto targetLocation = current.withOffset(0, rank1Offset);
+        if (targetLocation.isValid() && !board->getSquare(targetLocation)->isOccupied())
         {
-            moves.addIfNotAlreadyThere(current.withOffset(0, rank2Offset));
+            moves.addIfNotAlreadyThere(targetLocation);
+        }
+
+        if (isFirstMove)
+        {
+
+            auto rank2Offset = getPieceColour() == Colour::WHITE ? 2 : -2;
+            targetLocation = current.withOffset(0, rank2Offset);
+            if (targetLocation.isValid() && !board->getSquare(targetLocation)->isOccupied())
+            {
+                moves.addIfNotAlreadyThere(current.withOffset(0, rank2Offset));
+            }
+        }
+
+        targetLocation = current.withOffset(1, rank1Offset);
+        if (targetLocation.isValid())
+        {
+            auto targetSquare = board->getSquare(targetLocation);
+            if (targetSquare->isOccupied() && targetSquare->getCurrentPiece()->getPieceColour() != getPieceColour())
+            {
+                moves.addIfNotAlreadyThere(targetLocation);
+            }
+        }
+
+        targetLocation = current.withOffset(-1, rank1Offset);
+        if (targetLocation.isValid())
+        {
+            auto targetSquare = board->getSquare(targetLocation);
+            if (targetSquare->isOccupied() && targetSquare->getCurrentPiece()->getPieceColour() != getPieceColour())
+            {
+                moves.addIfNotAlreadyThere(targetLocation);
+            }
         }
     }
-
-    targetLocation = current.withOffset(1, rank1Offset);
-    auto targetSquare = board->getSquare(targetLocation);
-    if (targetSquare->isOccupied() && targetSquare->getCurrentPiece()->getPieceColour() != getPieceColour())
-    {
-        moves.addIfNotAlreadyThere(targetLocation);
-    }
-
-    targetLocation = current.withOffset(-1, rank1Offset);
-    targetSquare = board->getSquare(targetLocation);
-    if (targetSquare->isOccupied() && targetSquare->getCurrentPiece()->getPieceColour() != getPieceColour())
-    {
-        moves.addIfNotAlreadyThere(targetLocation);
-    }
-
     return moves;
 }

@@ -18,6 +18,7 @@ class Bishop;
 class King;
 class Queen;
 class Pawn; 
+class PieceBase;
 
 #define BOARD_LENGTH (8)
 

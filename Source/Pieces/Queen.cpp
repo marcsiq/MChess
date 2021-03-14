@@ -11,6 +11,8 @@
 #include <JuceHeader.h>
 #include "Queen.h"
 #include "../Board/Board.h"
+#include "../Pieces/Bishop.h"
+#include "../Pieces/Rook.h"
 
 //==============================================================================
 Queen::Queen(Colour colour)
@@ -24,14 +26,24 @@ Queen::Queen(Colour colour)
     {
         pieceImg = juce::ImageCache::getFromMemory(BinaryData::wq_png, BinaryData::wq_pngSize);
     }
+    rook.reset(new Rook(colour));
+    bishop.reset(new Bishop(colour));
 }
 
 Queen::~Queen()
 {
+    rook = nullptr;
+    rook = nullptr;
 }
 
 juce::Array<Location> Queen::getValidMoves(Board* board)
 {
     juce::Array<Location> moves;
+    rook->setCurrentSquare(currentSquare);
+    bishop->setCurrentSquare(currentSquare);
+
+    moves.addArray(rook->getValidMoves(board));
+    moves.addArray(bishop->getValidMoves(board));
+
     return moves;
 }

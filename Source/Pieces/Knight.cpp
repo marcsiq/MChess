@@ -33,5 +33,63 @@ Knight::~Knight()
 juce::Array<Location> Knight::getValidMoves(Board* board)
 {
     juce::Array<Location> moves;
+    auto current = getCurrentSquare()->getLocation();
+
+    auto targetLocation = current.withOffset(2, -1);
+    auto targetSquare = board->getSquare(targetLocation);
+    if (targetLocation.isValid() && (!targetSquare->isOccupied() || targetSquare->getCurrentPiece()->getPieceColour() != getPieceColour()))
+    {
+        moves.add(targetLocation);
+    }
+
+    targetLocation = current.withOffset(2, 1);
+    targetSquare = board->getSquare(targetLocation);
+    if (targetLocation.isValid() && (!targetSquare->isOccupied() || targetSquare->getCurrentPiece()->getPieceColour() != getPieceColour()))
+    {
+        moves.add(targetLocation);
+    }
+
+    targetLocation = current.withOffset(-2, -1);
+    targetSquare = board->getSquare(targetLocation);
+    if (targetLocation.isValid() && (!targetSquare->isOccupied() || targetSquare->getCurrentPiece()->getPieceColour() != getPieceColour()))
+    {
+        moves.add(targetLocation);
+    }
+
+    targetLocation = current.withOffset(-2, 1);
+    targetSquare = board->getSquare(targetLocation);
+    if (targetLocation.isValid() && (!targetSquare->isOccupied() || targetSquare->getCurrentPiece()->getPieceColour() != getPieceColour()))
+    {
+        moves.add(targetLocation);
+    }
+
+    targetLocation = current.withOffset(1, 2);
+    targetSquare = board->getSquare(targetLocation);
+    if (targetLocation.isValid() && (!targetSquare->isOccupied() || targetSquare->getCurrentPiece()->getPieceColour() != getPieceColour()))
+    {
+        moves.add(targetLocation);
+    }
+
+    targetLocation = current.withOffset(-1, 2);
+    targetSquare = board->getSquare(targetLocation);
+    if (targetLocation.isValid() && (!targetSquare->isOccupied() || targetSquare->getCurrentPiece()->getPieceColour() != getPieceColour()))
+    {
+        moves.add(targetLocation);
+    }
+
+    targetLocation = current.withOffset(1, -2);
+    targetSquare = board->getSquare(targetLocation);
+    if (targetLocation.isValid() && (!targetSquare->isOccupied() || targetSquare->getCurrentPiece()->getPieceColour() != getPieceColour()))
+    {
+        moves.add(targetLocation);
+    }
+
+    targetLocation = current.withOffset(-1, -2);
+    targetSquare = board->getSquare(targetLocation);
+    if (targetLocation.isValid() && (!targetSquare->isOccupied() || targetSquare->getCurrentPiece()->getPieceColour() != getPieceColour()))
+    {
+        moves.add(targetLocation);
+    }
+
     return moves;
 }

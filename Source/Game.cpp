@@ -55,7 +55,25 @@ Board* Game::getBoard()
 
 void Game::printValidMovesForCurrentPlayer()
 {
-    DBG("NUM VALID MOVES FOR " << colourToString[currentPlayer] << " --> " << board->getNumValidMoves(currentPlayer));
+    PieceSet* set = (currentPlayer == Colour::WHITE ? &whitePieces : &blackPieces);
+    juce::Array<Location> moves;
+
+    for (int i = 0; i < 2; i++)
+    {
+        moves.addArray(set->rook[i]->getValidMoves(board.get()));
+        moves.addArray(set->knight[i]->getValidMoves(board.get()));
+        moves.addArray(set->bishop[i]->getValidMoves(board.get()));
+    }
+
+    moves.addArray(set->king->getValidMoves(board.get()));
+    moves.addArray(set->queen->getValidMoves(board.get()));
+
+    for (int i = 0; i < 8; i++)
+    {
+        moves.addArray(set->pawn[i]->getValidMoves(board.get()));
+    }
+
+    DBG("NUM VALID MOVES FOR " << colourToString[currentPlayer] << " --> " << moves.size());
 
 }
 

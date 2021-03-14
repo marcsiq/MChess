@@ -34,6 +34,11 @@ public:
         return fileToString[file] + rankToString[rank];
     }
 
+    bool isValid()
+    {
+        return valid;
+    }
+
     friend bool operator==(const Location& l, const Location& r) {
         return (l.file == r.file) && (l.rank == r.rank);
     }
@@ -44,13 +49,21 @@ public:
 
     Location withOffset(int fileOffset, int rankOffset)
     {
-        int newFile = std::max(0, std::min(BOARD_LENGTH-1, fileOffset + (int)file));
-        int newRank = std::max(0, std::min(BOARD_LENGTH-1, rankOffset + (int)rank));
+        int newFile = fileOffset + (int)file;
+        int newRank = rankOffset + (int)rank;
+
         Location l((File)newFile, (Rank)newRank);
+
+        if (newFile < 0 || newFile >= 8 || newRank < 0 || newRank >= 8)
+        {
+            l.valid = false;
+        }
+
         return l;
     }
 
 private:
     File file;
     Rank rank;
+    bool valid = true;
 };
