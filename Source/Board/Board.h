@@ -26,25 +26,23 @@ public:
     Board(const Board& other);
 
     void initBoard();
-    void startGame();
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
     void printBoard(void);
 
-    Colour getCurrentPlayer();
-    void nextPlayer();
-
     Square* getSquare(File f, Rank r);
     Square* getSquare(Location l);
+
+    void addPieceToBoard(PieceBase* piece, Location l);
 
     void pieceMoving(PieceBase* piece);
     void movePiece(PieceBase* piece, Square* square);
 
     void noPieceMoving(void);
 
-    int getNumValidMoves(void);
+    int getNumValidMoves(Colour player);
 
 private:
 
@@ -59,8 +57,6 @@ private:
         std::unique_ptr<PieceBase> bishop[2][2];
         std::unique_ptr<PieceBase> knight[2][2];
     }pieces;
-
-    Colour currentPlayer;
 
     JUCE_LEAK_DETECTOR(Board)
 };

@@ -15,13 +15,29 @@ public:
     ~Game();
 
     void startGame();
+    
     void nextPlayer();
+    Colour getCurrentPlayer();
+
     void makeMove(PieceBase* piece, Square* square);
+    
+    void printValidMovesForCurrentPlayer();
+
+    Board* getBoard();
 
 private:
     //==============================================================================
     // Your private member variables go here...
     std::unique_ptr<Board> board;
+    
+    PieceSet blackPieces;
+    PieceSet whitePieces;
+
+    void initPieceSet(PieceSet* set, Colour colour);
+    void placeStartingPieces();
+
+
+    Colour currentPlayer;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Game)
 };

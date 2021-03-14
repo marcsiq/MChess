@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "PieceBase.h"
 #include "../Board/Board.h"
+#include "../Game.h"
 
 //==============================================================================
 PieceBase::PieceBase(juce::String name, Colour colour)
@@ -84,11 +85,9 @@ juce::MouseCursor PieceBase::getMouseCursor()
 
 void PieceBase::mouseDrag(const juce::MouseEvent& event)
 {
-
-    auto board = (Board*) getParentComponent();
-    if (board->getCurrentPlayer() == getPieceColour())
+    if (getGame()->getCurrentPlayer() == getPieceColour())
     {
-        board->pieceMoving(this);
+        getGame()->getBoard()->pieceMoving(this);
     }
     isDragging = true;
 }
