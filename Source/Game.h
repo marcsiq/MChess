@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 #include "Board/Board.h"
+
 //==============================================================================
 /*
     This component lives inside our window, and this is where you should put all
@@ -21,7 +22,9 @@ public:
 
     void makeMove(PieceBase* piece, Square* square);
     
-    void printValidMovesForCurrentPlayer();
+    int getNumValidMoves(Colour player);
+
+    float getEvaluationValue();
 
     Board* getBoard();
 
@@ -30,12 +33,9 @@ private:
     // Your private member variables go here...
     std::unique_ptr<Board> board;
     
-    PieceSet blackPieces;
-    PieceSet whitePieces;
+    juce::OwnedArray<PieceBase> whitePieces, blackPieces;
 
-    void initPieceSet(PieceSet* set, Colour colour);
-    void placeStartingPieces();
-
+    void initStandardGame();
 
     Colour currentPlayer;
 

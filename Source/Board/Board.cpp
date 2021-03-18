@@ -48,7 +48,10 @@ Board::Board(const Board& other)
 
 Board::~Board()
 {
-
+    for (auto& s : boardSquares)
+    {
+        s->reset();
+    }
 }
 
 void Board::printBoard(void)

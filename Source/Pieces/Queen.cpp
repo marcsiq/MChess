@@ -28,6 +28,8 @@ Queen::Queen(Colour colour)
     }
     rook.reset(new Rook(colour));
     bishop.reset(new Bishop(colour));
+
+    value = 9;
 }
 
 Queen::~Queen()

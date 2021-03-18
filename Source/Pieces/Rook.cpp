@@ -24,6 +24,8 @@ Rook::Rook(Colour colour)
     {
         pieceImg = juce::ImageCache::getFromMemory(BinaryData::wr_png, BinaryData::wr_pngSize);
     }
+
+    value = 5;
 }
 
 Rook::~Rook()

@@ -20,6 +20,8 @@ PieceBase::PieceBase(juce::String name, Colour colour)
     currentSquare = nullptr;
     isDragging = false;
     movedBefore = false;
+    beenCaptured = false;
+    value = 0;
 }
 
 PieceBase::PieceBase(const PieceBase& other)
@@ -51,8 +53,10 @@ Square* PieceBase::getCurrentSquare()
 
 void PieceBase::setStartingSquare(Square* square)
 {
+    setVisible(true);
     currentSquare = square;
     movedBefore = false;
+    beenCaptured = false;
 }
 
 void PieceBase::moveToSquare(Square* square)
@@ -65,6 +69,22 @@ void PieceBase::moveToSquare(Square* square)
 bool PieceBase::hasMovedBefore()
 {
     return movedBefore;
+}
+
+bool PieceBase::hasBeenCaptured()
+{
+    return beenCaptured;
+}
+
+void PieceBase::capture()
+{
+    beenCaptured = true;
+    setVisible(false);
+}
+
+int PieceBase::getPieceValue()
+{
+    return value;
 }
 
 juce::String PieceBase::toString()

@@ -68,7 +68,7 @@ void Square::setCurrentPiece(PieceBase* piece)
 {
     if (isOccupied())
     {
-        currentPiece->setVisible(false);
+        currentPiece->capture();
         currentPiece = nullptr;
     }
     currentPiece = piece;

@@ -24,6 +24,8 @@ Bishop::Bishop(Colour colour)
     {
         pieceImg = juce::ImageCache::getFromMemory(BinaryData::wb_png, BinaryData::wb_pngSize);
     }
+
+    value = 3;
 }
 
 Bishop::~Bishop()

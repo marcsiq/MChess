@@ -90,12 +90,4 @@ static std::map<Rank, juce::String> rankToString = {
     {Rank::_8, "8"},
 };
 
-typedef struct PieceSet
-{
-    std::unique_ptr<Rook> rook[2];
-    std::unique_ptr<Knight> knight[2];
-    std::unique_ptr<Bishop> bishop[2];
-    std::unique_ptr<King> king;
-    std::unique_ptr<Queen> queen;
-    std::unique_ptr<Pawn> pawn[8];
-};
+

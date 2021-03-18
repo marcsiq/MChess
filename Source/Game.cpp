@@ -11,8 +11,7 @@ Game* getGame()
 Game::Game(Board* mBoard)
 {
     board.reset(mBoard);
-    initPieceSet(&blackPieces, Colour::BLACK);
-    initPieceSet(&whitePieces, Colour::WHITE);
+
     startGame();
 }
 
@@ -25,16 +24,19 @@ Game::~Game()
 void Game::startGame()
 {
     board->initBoard();
-    placeStartingPieces();
+    initStandardGame();
     currentPlayer = Colour::WHITE;
 
-    printValidMovesForCurrentPlayer();
+    DBG("VALID MOVES FOR " << colourToString[currentPlayer] << " -> " << juce::String(getNumValidMoves(currentPlayer)));
+    DBG("EVALUATION: " << getEvaluationValue() );
+
 }
 
 void Game::nextPlayer()
 {
     currentPlayer = (currentPlayer == Colour::WHITE ? Colour::BLACK : Colour::WHITE);
-    printValidMovesForCurrentPlayer();
+    DBG("VALID MOVES FOR " << colourToString[currentPlayer] << " -> " << juce::String(getNumValidMoves(currentPlayer)));
+    DBG("EVALUATION: " << getEvaluationValue());
 }
 
 Colour Game::getCurrentPlayer()
@@ -53,82 +55,104 @@ Board* Game::getBoard()
     return board.get();
 }
 
-void Game::printValidMovesForCurrentPlayer()
+int Game::getNumValidMoves(Colour player)
 {
-    PieceSet* set = (currentPlayer == Colour::WHITE ? &whitePieces : &blackPieces);
+
     juce::Array<Location> moves;
 
-    for (int i = 0; i < 2; i++)
+    if (player == Colour::WHITE)
     {
-        moves.addArray(set->rook[i]->getValidMoves(board.get()));
-        moves.addArray(set->knight[i]->getValidMoves(board.get()));
-        moves.addArray(set->bishop[i]->getValidMoves(board.get()));
+        for (auto& p : whitePieces)
+        {
+            moves.addArray(p->getValidMoves(board.get()));
+        }
+    }
+    else if (player == Colour::BLACK)
+    {
+        for (auto& p : blackPieces)
+        {
+            moves.addArray(p->getValidMoves(board.get()));
+        }
     }
 
-    moves.addArray(set->king->getValidMoves(board.get()));
-    moves.addArray(set->queen->getValidMoves(board.get()));
-
-    for (int i = 0; i < 8; i++)
-    {
-        moves.addArray(set->pawn[i]->getValidMoves(board.get()));
-    }
-
-    DBG("NUM VALID MOVES FOR " << colourToString[currentPlayer] << " --> " << moves.size());
+    return (int)moves.size();
 
 }
 
-void Game::initPieceSet(PieceSet* set, Colour colour)
+void Game::initStandardGame()
 {
-    set->rook[0].reset(new Rook(colour));
-    set->rook[1].reset(new Rook(colour));
+    whitePieces.add(new Rook{ Colour::WHITE });
+    board->addPieceToBoard(whitePieces.getLast(), { File::A, Rank::_1 });
+    whitePieces.add(new Rook{ Colour::WHITE });
+    board->addPieceToBoard(whitePieces.getLast(), { File::H, Rank::_1});
 
-    set->knight[0].reset(new Knight(colour));
-    set->knight[1].reset(new Knight(colour));
+    blackPieces.add(new Rook{ Colour::BLACK });
+    board->addPieceToBoard(blackPieces.getLast(), { File::A, Rank::_8 });
+    blackPieces.add(new Rook{ Colour::BLACK });
+    board->addPieceToBoard(blackPieces.getLast(), { File::H, Rank::_8 });
 
-    set->bishop[0].reset(new Bishop(colour));
-    set->bishop[1].reset(new Bishop(colour));
+    whitePieces.add(new Knight{ Colour::WHITE });
+    board->addPieceToBoard(whitePieces.getLast(), { File::B, Rank::_1 });
+    whitePieces.add(new Knight{ Colour::WHITE });
+    board->addPieceToBoard(whitePieces.getLast(), { File::G, Rank::_1});
 
-    set->king.reset(new King(colour));
-    set->queen.reset(new Queen(colour));
+    blackPieces.add(new Knight{ Colour::BLACK });
+    board->addPieceToBoard(blackPieces.getLast(), { File::B, Rank::_8 });
+    blackPieces.add(new Knight{ Colour::BLACK });
+    board->addPieceToBoard(blackPieces.getLast(), { File::G, Rank::_8 });
+
+    whitePieces.add(new Bishop{ Colour::WHITE });
+    board->addPieceToBoard(whitePieces.getLast(), { File::C, Rank::_1 });
+    whitePieces.add(new Bishop{ Colour::WHITE });
+    board->addPieceToBoard(whitePieces.getLast(), { File::F, Rank::_1});
+
+    blackPieces.add(new Bishop{ Colour::BLACK });
+    board->addPieceToBoard(blackPieces.getLast(), { File::C, Rank::_8 });
+    blackPieces.add(new Bishop{ Colour::BLACK });
+    board->addPieceToBoard(blackPieces.getLast(), { File::F, Rank::_8 });
+
+    whitePieces.add(new Queen{ Colour::WHITE });
+    board->addPieceToBoard(whitePieces.getLast(), { File::D, Rank::_1 });
+
+    blackPieces.add(new Queen{ Colour::BLACK });
+    board->addPieceToBoard(blackPieces.getLast(), { File::D, Rank::_8 });
+
+    whitePieces.add(new King{ Colour::WHITE });
+    board->addPieceToBoard(whitePieces.getLast(), { File::E, Rank::_1 });
+
+    blackPieces.add(new King{ Colour::BLACK });
+    board->addPieceToBoard(blackPieces.getLast(), { File::E, Rank::_8 });
+
 
     for (int i = 0; i < 8; i++)
     {
-        set->pawn[i].reset(new Pawn(colour));
-
+        whitePieces.add(new Pawn{ Colour::WHITE });
+        board->addPieceToBoard(whitePieces.getLast(), {(File)i, Rank::_2});
+        blackPieces.add(new Pawn{ Colour::BLACK });
+        board->addPieceToBoard(blackPieces.getLast(), {(File)i, Rank::_7});
     }
-
 }
 
-void Game::placeStartingPieces()
+
+float Game::getEvaluationValue()
 {
-    board->addPieceToBoard(whitePieces.rook[0].get(), { File::A, Rank::_1 });
-    board->addPieceToBoard(whitePieces.rook[1].get(), { File::H, Rank::_1});
+    float value = 0.0f;
 
-    board->addPieceToBoard(blackPieces.rook[0].get(), { File::A, Rank::_8 });
-    board->addPieceToBoard(blackPieces.rook[1].get(), { File::H, Rank::_8 });
-
-    board->addPieceToBoard(whitePieces.knight[0].get(), { File::B, Rank::_1 });
-    board->addPieceToBoard(whitePieces.knight[1].get(), { File::G, Rank::_1});
-
-    board->addPieceToBoard(blackPieces.knight[0].get(), { File::B, Rank::_8 });
-    board->addPieceToBoard(blackPieces.knight[1].get(), { File::G, Rank::_8 });
-
-    board->addPieceToBoard(whitePieces.bishop[0].get(), { File::C, Rank::_1 });
-    board->addPieceToBoard(whitePieces.bishop[1].get(), { File::F, Rank::_1});
-
-    board->addPieceToBoard(blackPieces.bishop[0].get(), { File::C, Rank::_8 });
-    board->addPieceToBoard(blackPieces.bishop[1].get(), { File::F, Rank::_8 });
-
-    board->addPieceToBoard(whitePieces.queen.get(), { File::D, Rank::_1 });
-    board->addPieceToBoard(blackPieces.queen.get(), { File::D, Rank::_8 });
-
-    board->addPieceToBoard(whitePieces.king.get(), { File::E, Rank::_1 });
-    board->addPieceToBoard(blackPieces.king.get(), { File::E, Rank::_8 });
-
-
-    for (int i = 0; i < 8; i++)
+    for (auto& p : whitePieces)
     {
-        board->addPieceToBoard(whitePieces.pawn[i].get(), {(File)i, Rank::_2});
-        board->addPieceToBoard(blackPieces.pawn[i].get(), {(File)i, Rank::_7});
+        if (!p->hasBeenCaptured())
+        {
+            value += p->getPieceValue();
+        }
     }
+
+    for (auto& p : blackPieces)
+    {
+        if (!p->hasBeenCaptured())
+        {
+            value -= p->getPieceValue();
+        }
+    }
+
+    return value;
 }

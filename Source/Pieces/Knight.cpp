@@ -24,6 +24,8 @@ Knight::Knight(Colour colour)
     {
         pieceImg = juce::ImageCache::getFromMemory(BinaryData::wn_png, BinaryData::wn_pngSize);
     }
+
+    value = 3;
 }
 
 Knight::~Knight()

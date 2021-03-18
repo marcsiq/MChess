@@ -30,6 +30,8 @@ public:
     Colour getPieceColour();
     juce::String getName();
     Square* getCurrentSquare();
+    int getPieceValue();
+
     void setStartingSquare(Square* square);
     void moveToSquare(Square* square);
 
@@ -49,8 +51,10 @@ public:
     void itemDragExit(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails) override;
     void itemDropped(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails) override;
 
-
+    void capture();
     bool hasMovedBefore();
+    bool hasBeenCaptured();
+
     virtual juce::Array<Location> getValidMoves(Board* board);
 
 protected:
@@ -59,8 +63,11 @@ protected:
     Square* currentSquare;
     juce::String name;
 
+    int value;
+
     bool isDragging;
     bool movedBefore;
+    bool beenCaptured;
 
     JUCE_LEAK_DETECTOR(PieceBase)
 };

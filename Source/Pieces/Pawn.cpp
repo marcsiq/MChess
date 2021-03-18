@@ -25,6 +25,8 @@ Pawn::Pawn(Colour colour)
     {
         pieceImg = juce::ImageCache::getFromMemory(BinaryData::wp_png, BinaryData::wp_pngSize);
     }
+
+    value = 1;
 }
 
 Pawn::~Pawn()
