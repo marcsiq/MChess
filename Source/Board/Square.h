@@ -29,16 +29,16 @@ public:
 
 	//==============================================================================
 
-	bool isOccupied(void);
-	Colour getColour(void);
-	Location getLocation(void);
+	bool isOccupied(void) const;
+	Colour getColour(void) const;
+	Location getLocation(void) const;
 	void setCurrentPiece(PieceBase* piece);
-	PieceBase* getCurrentPiece(void);
+	PieceBase* getCurrentPiece(void) const;
 
 	//==============================================================================
 
 	void reset();
-	juce::String toString();
+	juce::String toString() const;
 	void setTarget(bool isTarget);
 
 	//==============================================================================

@@ -13,12 +13,8 @@
 #include "../Game.h"
 
 Square::Square(Colour mcolour, Location mLocation)
-	: colour(mcolour), location(mLocation)
+	: colour(mcolour), location(mLocation), currentPiece(nullptr), isTarget(false), isDragging(false)
 {
-	//setRepaintsOnMouseActivity(true);
-	isTarget = false;
-	currentPiece = nullptr;
-	isDragging = false;
 }
 
 Square::Square(const Square& other)
@@ -50,17 +46,17 @@ void Square::reset()
 	repaint();
 }
 
-bool Square::isOccupied(void)
+bool Square::isOccupied(void) const
 {
 	return currentPiece != nullptr;
 }
 
-Colour Square::getColour(void)
+Colour Square::getColour(void) const
 {
 	return colour;
 }
 
-Location Square::getLocation(void)
+Location Square::getLocation(void) const
 {
 	return location;
 }
@@ -78,16 +74,16 @@ void Square::setCurrentPiece(PieceBase* piece)
 	resized();
 }
 
-PieceBase* Square::getCurrentPiece(void)
+PieceBase* Square::getCurrentPiece(void) const
 {
 	return currentPiece;
 }
 
-juce::String Square::toString()
+juce::String Square::toString() const
 {
 	juce::String text;
 	text << "Square{";
-	text << " Colour=" << colourToString[colour];
+	text << " Colour=" << colourToString.at(colour);
 	text << " Location=" << location.toString();
 	text << " Piece=" << (isOccupied() ? currentPiece->toString() : "NONE");
 	text << " }";
@@ -98,9 +94,9 @@ void Square::paint(juce::Graphics& g)
 {
 	auto b = getLocalBounds().toFloat();
 
-	g.fillAll(getSquareColour(colour));
+	g.fillAll(colourToColour.at(colour));
 	g.setColour(juce::Colours::white.darker());
-	g.drawSingleLineText(location.toString(), b.getX(), b.getY() + 10, juce::Justification::left);
+	g.drawSingleLineText(location.toString(), b.toNearestInt().getX(), b.toNearestInt().getY() + 10, juce::Justification::left);
 
 	if (isTarget)
 	{
@@ -128,12 +124,12 @@ void Square::resized()
 	}
 }
 
-bool Square::isInterestedInDragSource(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
+bool Square::isInterestedInDragSource(const juce::DragAndDropTarget::SourceDetails&)
 {
 	return true;
 }
 
-void Square::itemDragEnter(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
+void Square::itemDragEnter(const juce::DragAndDropTarget::SourceDetails&)
 {
 	if (isTarget)
 	{
@@ -142,11 +138,11 @@ void Square::itemDragEnter(const juce::DragAndDropTarget::SourceDetails& dragSou
 	}
 }
 
-void Square::itemDragMove(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
+void Square::itemDragMove(const juce::DragAndDropTarget::SourceDetails&)
 {
 }
 
-void Square::itemDragExit(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
+void Square::itemDragExit(const juce::DragAndDropTarget::SourceDetails&)
 {
 	if (isTarget)
 	{
@@ -168,11 +164,11 @@ void Square::itemDropped(const juce::DragAndDropTarget::SourceDetails& dragSourc
 	board->noPieceMoving();
 }
 
-void Square::setTarget(bool isTarget)
+void Square::setTarget(bool target)
 {
-	if (this->isTarget != isTarget)
+	if (isTarget != target)
 	{
-		this->isTarget = isTarget;
+		isTarget = target;
 		repaint();
 	}
 }

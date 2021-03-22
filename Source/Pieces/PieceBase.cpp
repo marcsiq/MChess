@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    PieceBase.cpp
-    Created: 20 Feb 2021 1:21:10pm
-    Author:  marcs
+	PieceBase.cpp
+	Created: 20 Feb 2021 1:21:10pm
+	Author:  marcs
 
   ==============================================================================
 */
@@ -14,147 +14,140 @@
 #include "../Game.h"
 
 //==============================================================================
-PieceBase::PieceBase(juce::String name, Colour colour)
-    :colour(colour), name(name)
+PieceBase::PieceBase(juce::String name, Colour colour, int value)
+	:colour(colour), name(name), value(value)
 {
-    currentSquare = nullptr;
-    isDragging = false;
-    movedBefore = false;
-    beenCaptured = false;
-    value = 0;
+	currentSquare = nullptr;
+	isDragging = false;
+	movedBefore = false;
+	beenCaptured = false;
 }
 
 PieceBase::PieceBase(const PieceBase& other)
-    :PieceBase(other.name, other.colour)
+	:PieceBase(other.name, other.colour, other.value)
 {
-    currentSquare = other.currentSquare;
-    pieceImg = other.pieceImg;
+	currentSquare = other.currentSquare;
+	pieceImg = other.pieceImg;
 }
 
 PieceBase::~PieceBase()
 {
-    currentSquare = nullptr;
+	currentSquare = nullptr;
 }
 
 Colour PieceBase::getPieceColour()
 {
-    return colour;
+	return colour;
 }
 
 juce::String PieceBase::getName()
 {
-    return name;
+	return name;
 }
 
 Square* PieceBase::getCurrentSquare()
 {
-    return currentSquare;
+	return currentSquare;
 }
 
 void PieceBase::setStartingSquare(Square* square)
 {
-    setVisible(true);
-    currentSquare = square;
-    movedBefore = false;
-    beenCaptured = false;
+	setVisible(true);
+	currentSquare = square;
+	movedBefore = false;
+	beenCaptured = false;
 }
 
 void PieceBase::moveToSquare(Square* square)
 {
-    currentSquare = square;
-    currentSquare->setCurrentPiece(this);
-    movedBefore = true;
+	currentSquare = square;
+	currentSquare->setCurrentPiece(this);
+	movedBefore = true;
 }
 
 bool PieceBase::hasMovedBefore()
 {
-    return movedBefore;
+	return movedBefore;
 }
 
 bool PieceBase::hasBeenCaptured()
 {
-    return beenCaptured;
+	return beenCaptured;
 }
 
 void PieceBase::capture()
 {
-    beenCaptured = true;
-    setVisible(false);
+	beenCaptured = true;
+	setVisible(false);
 }
 
 int PieceBase::getPieceValue()
 {
-    return value;
+	return value;
 }
 
 juce::String PieceBase::toString()
 {
-    juce::String text;
-    text << "Piece{";
-    text << " Name=" << name;
-    text << " Colour=" << colourToString[colour];
-    text << " Square=" << (currentSquare == nullptr ? "null" : currentSquare->getLocation().toString());
-    text << " }";
-    return text;
+	juce::String text;
+	text << "Piece{";
+	text << " Name=" << name;
+	text << " Colour=" << colourToString[colour];
+	text << " Square=" << (currentSquare == nullptr ? "null" : currentSquare->getLocation().toString());
+	text << " }";
+	return text;
 }
 
 void PieceBase::paint(juce::Graphics& g)
 {
-    if (!isDragging)
-    {
-        g.setImageResamplingQuality(juce::Graphics::highResamplingQuality);
-        g.drawImage(pieceImg, getLocalBounds().toFloat(), juce::RectanglePlacement(juce::RectanglePlacement::fillDestination));
-    }
+	if (!isDragging)
+	{
+		g.setImageResamplingQuality(juce::Graphics::highResamplingQuality);
+		g.drawImage(pieceImg, getLocalBounds().toFloat(), juce::RectanglePlacement(juce::RectanglePlacement::fillDestination));
+	}
 }
 
 void PieceBase::resized()
 {
-    repaint();
+	repaint();
 }
 
 juce::MouseCursor PieceBase::getMouseCursor()
 {
-    return juce::MouseCursor::DraggingHandCursor;
+	return juce::MouseCursor::DraggingHandCursor;
 }
 
-void PieceBase::mouseDrag(const juce::MouseEvent& event)
+void PieceBase::mouseDrag(const juce::MouseEvent&)
 {
-    if (getGame()->getCurrentPlayer() == getPieceColour())
-    {
-        getGame()->getBoard()->pieceMoving(this);
-    }
-    isDragging = true;
+	if (getGame()->getCurrentPlayer() == getPieceColour())
+	{
+		getGame()->getBoard()->pieceMoving(this);
+	}
+	isDragging = true;
 }
 
-void PieceBase::mouseUp(const juce::MouseEvent& event)
+void PieceBase::mouseUp(const juce::MouseEvent&)
 {
-    isDragging = false;
-    repaint();
+	isDragging = false;
+	repaint();
 }
 
 bool PieceBase::isInterestedInDragSource(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
 {
-    return currentSquare->isInterestedInDragSource(dragSourceDetails);
+	return currentSquare->isInterestedInDragSource(dragSourceDetails);
 }
 void PieceBase::itemDragEnter(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
 {
-    currentSquare->itemDragEnter(dragSourceDetails);
+	currentSquare->itemDragEnter(dragSourceDetails);
 }
 void PieceBase::itemDragMove(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
 {
-    currentSquare->itemDragMove(dragSourceDetails);
+	currentSquare->itemDragMove(dragSourceDetails);
 }
 void PieceBase::itemDragExit(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
 {
-    currentSquare->itemDragExit(dragSourceDetails);
+	currentSquare->itemDragExit(dragSourceDetails);
 }
 void PieceBase::itemDropped(const juce::DragAndDropTarget::SourceDetails& dragSourceDetails)
 {
-    currentSquare->itemDropped(dragSourceDetails);
-}
-
-juce::Array<Location> PieceBase::getValidMoves(Board* board)
-{
-    juce::Array<Location> moves;
-    return moves;
+	currentSquare->itemDropped(dragSourceDetails);
 }

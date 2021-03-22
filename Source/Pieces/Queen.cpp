@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    Queen.cpp
-    Created: 20 Feb 2021 1:35:12pm
-    Author:  marcs
+	Queen.cpp
+	Created: 20 Feb 2021 1:35:12pm
+	Author:  marcs
 
   ==============================================================================
 */
@@ -15,37 +15,38 @@
 #include "../Pieces/Rook.h"
 
 //==============================================================================
-Queen::Queen(Colour colour)
-    :PieceBase("Queen", colour)
-{
-    if (colour == Colour::BLACK)
-    {
-        pieceImg = juce::ImageCache::getFromMemory(BinaryData::bq_png, BinaryData::bq_pngSize);
-    }
-    else if (colour == Colour::WHITE)
-    {
-        pieceImg = juce::ImageCache::getFromMemory(BinaryData::wq_png, BinaryData::wq_pngSize);
-    }
-    rook.reset(new Rook(colour));
-    bishop.reset(new Bishop(colour));
 
-    value = 9;
+static const int QueenValue = 9;
+
+Queen::Queen(Colour colour)
+	:PieceBase("Queen", colour, QueenValue)
+{
+	if (colour == Colour::BLACK)
+	{
+		pieceImg = juce::ImageCache::getFromMemory(BinaryData::bq_png, BinaryData::bq_pngSize);
+	}
+	else if (colour == Colour::WHITE)
+	{
+		pieceImg = juce::ImageCache::getFromMemory(BinaryData::wq_png, BinaryData::wq_pngSize);
+	}
+	rook.reset(new Rook(colour));
+	bishop.reset(new Bishop(colour));
 }
 
 Queen::~Queen()
 {
-    rook = nullptr;
-    rook = nullptr;
+	rook = nullptr;
+	rook = nullptr;
 }
 
-juce::Array<Location> Queen::getValidMoves(Board* board)
+juce::Array<Location> Queen::getValidMoves(const Board& board)
 {
-    juce::Array<Location> moves;
-    rook->setStartingSquare(currentSquare);
-    bishop->setStartingSquare(currentSquare);
+	juce::Array<Location> moves;
+	rook->setStartingSquare(currentSquare);
+	bishop->setStartingSquare(currentSquare);
 
-    moves.addArray(rook->getValidMoves(board));
-    moves.addArray(bishop->getValidMoves(board));
+	moves.addArray(rook->getValidMoves(board));
+	moves.addArray(bishop->getValidMoves(board));
 
-    return moves;
+	return moves;
 }

@@ -5,41 +5,41 @@
 
 //==============================================================================
 /*
-    This component lives inside our window, and this is where you should put all
-    your controls and content.
+	This component lives inside our window, and this is where you should put all
+	your controls and content.
 */
-class Game 
+class Game
 {
 public:
-    //==============================================================================
-    Game(Board* mBoard);
-    ~Game();
+	//==============================================================================
+	Game(Board* mBoard);
+	~Game();
 
-    void startGame();
-    
-    void nextPlayer();
-    Colour getCurrentPlayer();
+	void startGame();
 
-    void makeMove(PieceBase* piece, Square* square);
-    
-    int getNumValidMoves(Colour player);
+	void nextPlayer();
+	Colour getCurrentPlayer() const;
 
-    float getEvaluationValue();
+	void makeMove(PieceBase* piece, Square* square);
 
-    Board* getBoard();
+	int getNumValidMoves(const Colour& player) const;
+
+	float getEvaluationValue() const;
+
+	Board* const getBoard() const;
 
 private:
-    //==============================================================================
-    // Your private member variables go here...
-    std::unique_ptr<Board> board;
-    
-    juce::OwnedArray<PieceBase> whitePieces, blackPieces;
+	//==============================================================================
+	// Your private member variables go here...
+	std::unique_ptr<Board> board;
 
-    void initStandardGame();
+	juce::OwnedArray<PieceBase> whitePieces, blackPieces;
 
-    Colour currentPlayer;
+	void initStandardGame();
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Game)
+	Colour currentPlayer;
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Game)
 };
 
 /**
