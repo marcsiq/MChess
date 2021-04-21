@@ -12,7 +12,7 @@ class Game
 {
 public:
 	//==============================================================================
-	Game(Board* mBoard);
+	Game(std::shared_ptr<Board> mBoard);
 	~Game();
 
 	void startGame();
@@ -26,12 +26,12 @@ public:
 
 	float getEvaluationValue() const;
 
-	Board* const getBoard() const;
+	std::shared_ptr<Board> const getBoard() const;
 
 private:
 	//==============================================================================
 	// Your private member variables go here...
-	std::unique_ptr<Board> board;
+	std::shared_ptr<Board> board;
 
 	juce::OwnedArray<PieceBase> whitePieces, blackPieces;
 

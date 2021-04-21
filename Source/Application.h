@@ -34,7 +34,7 @@ public:
 	void initialise(const juce::String&) override
 	{
 		board.reset(new Board());
-		game.reset(new Game(board.get()));
+		game.reset(new Game(board));
 		mainWindow.reset(new MainWindow(getApplicationName(), board.get()));
 	}
 
@@ -103,5 +103,5 @@ public:
 private:
 	std::unique_ptr<Game> game;
 	std::unique_ptr<MainWindow> mainWindow;
-	std::unique_ptr<Board> board;
+	std::shared_ptr<Board> board;
 };

@@ -8,16 +8,16 @@ Game* getGame()
 }
 
 //==============================================================================
-Game::Game(Board* mBoard)
+Game::Game(std::shared_ptr<Board> mBoard)
 {
-	board.reset(mBoard);
+	board = mBoard;
 
 	startGame();
 }
 
 Game::~Game()
 {
-	board.release();
+	board.reset();
 }
 
 void Game::startGame()
@@ -48,9 +48,9 @@ void Game::makeMove(PieceBase* piece, Square* square)
 	nextPlayer();
 }
 
-Board* const Game::getBoard() const
+std::shared_ptr<Board> const Game::getBoard() const
 {
-	return board.get();
+	return board;
 }
 
 int Game::getNumValidMoves(const Colour& player) const
